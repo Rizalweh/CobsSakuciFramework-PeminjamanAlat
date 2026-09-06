@@ -13,4 +13,19 @@ class KategoriController extends Controller
         $data = Kategori::paginate(2);
        return view('kategori.index', compact('data'));
     }
+
+    public function edit($id)
+    {
+        $data = Kategori::FindOrFail($id);
+        return view('kategori.edit', compact('data'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = Kategori::FindOrFail($id);
+
+        $data->update($request->all());
+        return redirect(route('admin.kategori.index'));
+    }
+
 }

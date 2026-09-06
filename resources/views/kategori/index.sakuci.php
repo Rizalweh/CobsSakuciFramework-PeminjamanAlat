@@ -19,7 +19,7 @@
     <td> {{ $kategoris->kode_kategori }} </td>
     <td> {{ $kategoris->keterangan }} </td>
     <td>
-         <a href="" class="btn btn-primary btn-sm">Edit</a>
+         <a href="{{ route('admin.kategori.edit', ['id' => $kategoris->id_kategori]) }}" method="POST" class="btn btn-primary btn-sm">Edit</a> 
          <a href="" class="btn btn-danger btn-sm">Hapus</a>
     </td>
 </tr>

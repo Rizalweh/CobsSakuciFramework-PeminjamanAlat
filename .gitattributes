@@ -1,0 +1,11 @@
+# Normalkan akhir baris untuk berkas teks
+* text=auto
+
+# Berkas vendor yang sudah diminifikasi: jangan diubah sama sekali
+*.min.css  -text
+*.min.js   -text
+*.map      -text
+
+# Berkas yang tidak perlu ikut saat unduh ZIP
+.gitattributes export-ignore
+.gitignore     export-ignore

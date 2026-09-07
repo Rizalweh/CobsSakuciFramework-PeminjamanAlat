@@ -37,4 +37,11 @@ class KategoriController extends Controller
         Kategori::create($request->all());
         return redirect(route('kategori.index'))->with('success', 'Data berhasil disimpan');
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $data = kategori::FindOrFail($id);
+        $data->delete();
+        return redirect(route('kategori.index'))->with('success', 'Data berhasil dihapus');
+    }
 }

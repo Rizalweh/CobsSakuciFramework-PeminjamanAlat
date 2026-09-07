@@ -10,7 +10,7 @@ class KategoriController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Kategori::paginate(2);
+        $data = Kategori::OrderBy('id_kategori', 'desc')->paginate(5);
        return view('kategori.index', compact('data'));
     }
 
@@ -24,6 +24,17 @@ class KategoriController extends Controller
     {
         $data = Kategori::FindOrFail($id);
         $data->update($request->all());
-        return redirect(route('admin.kategori.index'))->with('success', 'Data berhasil diubah');
+        return redirect(route('kategori.index'))->with('success', 'Data berhasil diubah');
+    }
+
+    public function create(Request $request)
+    {
+        return view('kategori.create');
+    }
+
+    public function store(Request $request)
+    {
+        Kategori::create($request->all());
+        return redirect(route('kategori.index'))->with('success', 'Data berhasil disimpan');
     }
 }

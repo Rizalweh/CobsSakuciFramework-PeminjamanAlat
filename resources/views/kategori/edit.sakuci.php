@@ -3,7 +3,7 @@
 @section('title', config('app.name') . ' -- Kerangka PHP Ringan')
 
 @section('content')
-<form action="{{ route('admin.kategori.update', ['id' => $data->id_kategori]) }}" method="post" class="d-flex flex-column form-horizontal">
+<form action="{{ route('kategori.update', ['id' => $data->id_kategori]) }}" method="post" class="d-flex flex-column form-horizontal">
     @csrf
     @method('PUT')
 

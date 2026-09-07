@@ -3,7 +3,8 @@
 @section('title', config('app.name') . ' -- Kerangka PHP Ringan')
 
 @section('content')
-<table class = "table table-sm align-middle"> 
+<h1>Daftar Kategori</h1>
+<table class = "table table-sm align-middle table-hover table-bordered table-striped"> 
 <tr>
     <th>No</th>
     <th>nama kategori</th>
@@ -14,16 +15,19 @@
 @php $no = 1; @endphp
 @foreach ($data as $kategoris)
 <tr>
-    <td> {{ $no++ }} </td>
+    <td class="text-center"> {{ $no++ }} </td>
     <td> {{ $kategoris->nama_kategori }} </td>
     <td> {{ $kategoris->kode_kategori }} </td>
     <td> {{ $kategoris->keterangan }} </td>
     <td>
-         <a href="{{ route('admin.kategori.edit', ['id' => $kategoris->id_kategori]) }}" class="btn btn-primary btn-sm">Edit</a>
+         <a href="{{ route('kategori.edit', ['id' => $kategoris->id_kategori]) }}" class="btn btn-primary btn-sm">Edit</a>
          <a href="" class="btn btn-danger btn-sm">Hapus</a>
     </td>
 </tr>
 @endforeach
 </table>
+<div class="mt-5 mb-3 me-2 d-flex justify-content-end">
+<a href="{{ route('kategori.create') }}" class="btn btn-success">Tambah Kategori</a>
+</div>
 {!! $data->links() !!}
 @endsection

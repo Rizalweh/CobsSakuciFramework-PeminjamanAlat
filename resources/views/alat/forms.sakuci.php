@@ -1,48 +1,42 @@
 <div class="mb-3">
     <label for="kode_alat" class="form-label">Kode Alat</label>
-    <input type="text" id="kode_alat" name="kode_alat" class="form-control
-@error('kode_alat') is-invalid @enderror" value="{{ old('kode_alat', $alat->kode_alat ??
-'') }}" required>
-    @error('kode_alat') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <input type="text" class="form-control" id="kode_alat" name="kode_alat" value="{{ old('kode_alat', $alat->kode_alat ?? '') }}">
+    @error('kode_alat')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
 </div>
-<div class="mb-3">
+
+<div class="mb-3"></div>
     <label for="nama_alat" class="form-label">Nama Alat</label>
-    <input type="text" id="nama_alat" name="nama_alat" class="form-control
-@error('nama_alat') is-invalid @enderror" value="{{ old('nama_alat', $alat->nama_alat ??
-'') }}" required>
-    @error('nama_alat') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <input type="text" class="form-control" id="nama_alat" name="nama_alat" value="{{ old('nama_alat', $alat->nama_alat ?? '') }}">
+    @error('nama_alat')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
 </div>
-<div class="mb-3">
-    <label for="merk" class="form-label">Merk</label>
-    <input type="text" id="merk" name="merk" class="form-control @error('merk') is-invalid
-@enderror" value="{{ old('merk', $alat->merk ?? '') }}">
-    @error('merk') <div class="invalid-feedback">{{ $message }}</div> @enderror
-</div>
+
 <div class="mb-3">
     <label for="stok" class="form-label">Stok</label>
-    <input type="number" id="stok" name="stok" min="0" class="form-control @error('stok')
-is-invalid @enderror" value="{{ old('stok', $alat->stok ?? 0) }}" required>
-    @error('stok') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <input type="number" class="form-control" id="stok" name="stok" value="{{ old('stok', $alat->stok ?? '') }}">
+    @error('stok')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
 </div>
+
 <div class="mb-3">
     <label for="kondisi" class="form-label">Kondisi</label>
-    <select id="kondisi" name="kondisi" class="form-select @error('kondisi') is-invalid
-@enderror" required>
-        <option value="baik" @selected(old('kondisi', $alat->kondisi ?? 'baik') ===
-            'baik')>Baik</option>
-        <option value="rusak_ringan" @selected(old('kondisi', $alat->kondisi ?? '') ===
-            'rusak_ringan')>Rusak Ringan</option>
-        <option value="rusak_berat" @selected(old('kondisi', $alat->kondisi ?? '') ===
-            'rusak_berat')>Rusak Berat</option>
-    </select>
-    @error('kondisi') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <input type="text" class="form-control" id="kondisi" name="kondisi" value="{{ old('kondisi', $alat->kondisi ?? '') }}">
+    @error('kondisi')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
 </div>
+
 <div class="mb-3">
-    <label for="keterangan" class="form-label">Keterangan</label>
-    <textarea id="keterangan" name="keterangan" rows="4" class="form-control
-@error('keterangan') is-invalid @enderror">{{ old('keterangan', $alat->keterangan ??
-'') }}</textarea>
-    @error('keterangan') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <label for="foto_alat" class="form-label">Foto Alat</label>
+    <input type="file" class="form-control" id="foto_alat" name="foto_alat" value="{{ old('foto_alat', $alat->foto_alat ?? '') }}">
+    @error('foto_alat')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
 </div>
+
 <button type="submit" class="btn btn-primary">Simpan</button>
 <a href="{{ route('alat.index') }}" class="btn btn-secondary">Kembali</a>

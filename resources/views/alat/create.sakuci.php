@@ -6,7 +6,7 @@
         <div class="card-body">
             <form action="{{ route('alat.store') }}" method="POST">
                 @csrf
-                @include('alat.form')
+                @include('alat.forms')
             </form>
         </div>
     </div>

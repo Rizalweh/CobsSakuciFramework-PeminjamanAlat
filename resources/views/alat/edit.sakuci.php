@@ -7,7 +7,7 @@
             <form action="{{ route('alat.update', $alat) }}" method="POST">
                 @csrf
                 @method('PUT')
-                @include('alat.form')
+                @include('alat.forms')
             </form>
         </div>
     </div>

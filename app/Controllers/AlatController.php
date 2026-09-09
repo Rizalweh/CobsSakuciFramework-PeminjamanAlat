@@ -11,7 +11,7 @@ class AlatController extends Controller
     public function index(Request $request)
     {
         $data = Alat::OrderBy('id_alat', 'desc')->paginate(5);
-        return view('Alat.index', compact('data'));
+        return view('alat.index', compact('data'));
     }
 
     public function create(Request $request)
@@ -21,20 +21,43 @@ class AlatController extends Controller
 
     public function store(Request $request)
     {
-        Alat::create($request->all());
+        $data = $request->validate([
+            'kode_alat' => 'required|string|max:255|unique:alat,kode_alat',
+            'nama_alat' => 'required|string|max:255',
+            'stok' => 'required|numeric|min:0',
+            'kondisi' => 'required|enum:baik,rusak,rusak-berat',
+            'foto_alat' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        Alat::create($data);
         return redirect(route('alat.index'))->with('success', 'Data berhasil disimpan');
     }
 
-    public function destroy(Request $request, $id)
+    public function edit(Request $request, $id_alat)
     {
-        $data = Alat::FindOrFail($id);
-        $data->delete();
-        return redirect(route('alat.index'))->with('success', 'Data berhasil dihapus');
+        $data = Alat::FindOrFail($id_alat);
+        return view('alat.edit', compact('data'));
     }
 
-    public function edit(Request $request, $id)
+    public function update(Request $request, $id_alat)
     {
-        $data = Alat::FindOrFail($id);
-        return view('alat.edit', compact('data'));
+        $data = Alat::FindOrFail($id_alat);
+        $validatedData = $request->validate([
+            'kode_alat' => 'required|string|max:255|unique:alat,kode_alat,' . $data->id_alat,
+            'nama_alat' => 'required|string|max:255',
+            'stok' => 'required|numeric|min:0',    
+            'kondisi' => 'required|enum:baik,rusak,rusak-berat',
+            'foto_alat' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $data->update($validatedData);
+        return redirect(route('alat.index'))->with('success', 'Data berhasil diubah');
+    }
+
+    public function destroy(Request $request, $id_alat)
+    {
+        $data = Alat::FindOrFail($id_alat);
+        $data->delete();
+        return redirect(route('alat.index'))->with('success', 'Data berhasil dihapus');
     }
 }

@@ -24,32 +24,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($data as $a)
+                    @php $no= 1; @endphp
+                    @foreach ($data as $alat)
                     <tr>
-                        <td>{{ $loop->iteration + $alat->firstItem() - 1 }}</td>
-                        <td>{{ $data->kode_alat }}</td>
-                        <td>{{ $data->nama_alat }}</td>
-                        <td>{{ $data->merk ?? '-' }}</td>
-                        <td>{{ $data->stok }}</td>
-                        <td>{{ ucwords(str_replace('_', ' ', $a->kondisi)) }}</td>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ $alat->kode_alat }}</td>
+                        <td>{{ $alat->nama_alat }}</td>
+                        <td>{{ $alat->stok}}</td>
+                        <td>{{ $alat->kondisi}}</td>
+                        <td>{{ $alat->foto_alat }}</td>
                         <td>
                             <a href="{{ route('alat.edit', $alat) }}" class="btn btnwarning btn-sm">Edit</a>
                             <form action="{{ route('alat.destroy', $alat) }}"
                                 method="POST" class="d-inline" onsubmit="return confirm('Hapus data alat ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btnsm">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                             </form>
                         </td>
                     </tr>
-                    @empty
                     <tr>
                         <td colspan="7" class="text-center">Belum ada data alat.</td>
                     </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
-            {{ $data->links() }}
+            {!! $data->links() !!}
         </div>
     </div>
 </div>

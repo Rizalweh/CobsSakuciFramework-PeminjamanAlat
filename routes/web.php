@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
 
     Route::get('/database/export', [DatabaseController::class, 'export'])->name('admin.database.export');
+
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
     Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
     Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
@@ -63,7 +64,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
     Route::delete('/kategori/{id}', [KategoriController::class,'destroy'])->name('kategori.destroy');
 
-    Route::resource('alat', AlatController::class, [ 'except' => ['show'] ]);
+    Route::get('/alat', [AlatController::class, 'index'])->name('alat.index');
+    Route::get('/alat/create', [AlatController::class, 'create'])->name('alat.create');
+    Route::post('/alat', [AlatController::class, 'store'])->name('alat.store');
+    Route::get('/alat/{id_alat}/edit', [AlatController::class, 'edit'])->name('alat.edit');
+    Route::put('/alat/{id_alat}', [AlatController::class, 'update'])->name('alat.update');
+    Route::delete('/alat/{id_alat}', [AlatController::class, 'destroy'])->name('alat.destroy');
 });
 
 /*

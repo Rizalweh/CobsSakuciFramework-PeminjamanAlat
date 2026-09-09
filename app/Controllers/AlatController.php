@@ -33,17 +33,17 @@ class AlatController extends Controller
         return redirect(route('alat.index'))->with('success', 'Data berhasil disimpan');
     }
 
-    public function edit(Request $request, $id_alat)
+    public function edit(Request $request, $id)
     {
-        $data = Alat::FindOrFail($id_alat);
+        $data = Alat::FindOrFail($id);
         return view('alat.edit', compact('data'));
     }
 
-    public function update(Request $request, $id_alat)
+    public function update(Request $request, $id)
     {
-        $data = Alat::FindOrFail($id_alat);
+        $data = Alat::FindOrFail($id);
         $validatedData = $request->validate([
-            'kode_alat' => 'required|string|max:255|unique:alat,kode_alat,' . $data->id_alat,
+            'kode_alat' => 'required|string|max:255|unique:alat,kode_alat,' . $data->id_alat . ',id_alat',
             'nama_alat' => 'required|string|max:255',
             'stok' => 'required|numeric|min:0',    
             'kondisi' => 'required|enum:baik,rusak,rusak-berat',

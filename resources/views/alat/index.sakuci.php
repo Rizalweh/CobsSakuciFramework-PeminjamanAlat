@@ -17,9 +17,9 @@
                         <th>No</th>
                         <th>Kode</th>
                         <th>Nama Alat</th>
-                        <th>Merk</th>
                         <th>Stok</th>
                         <th>Kondisi</th>
+                        <th>Foto</th>
                         <th width="160">Aksi</th>
                     </tr>
                 </thead>
@@ -34,8 +34,8 @@
                         <td>{{ $alat->kondisi}}</td>
                         <td>{{ $alat->foto_alat }}</td>
                         <td>
-                            <a href="{{ route('alat.edit', $alat) }}" class="btn btnwarning btn-sm">Edit</a>
-                            <form action="{{ route('alat.destroy', $alat) }}"
+                            <a href="{{ route('alat.edit', ['id' => $alat->id_alat]) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('alat.destroy', ['id' => $alat->id_alat]) }}"
                                 method="POST" class="d-inline" onsubmit="return confirm('Hapus data alat ini?')">
                                 @csrf
                                 @method('DELETE')

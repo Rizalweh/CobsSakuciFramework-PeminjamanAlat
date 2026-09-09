@@ -4,7 +4,7 @@
     <h3>Edit Alat</h3>
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('alat.update', $alat) }}" method="POST">
+            <form action="{{ route('alat.update', ['id' => $data->id_alat]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 @include('alat.forms')

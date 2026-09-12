@@ -6,9 +6,6 @@
         <h3>Data Alat</h3>
         <a href="{{ route('alat.create') }}" class="btn btn-primary">Tambah Alat</a>
     </div>
-    @if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
     <div class="card">
         <div class="card-body table-responsive">
             <table class="table table-bordered table-striped">
@@ -32,7 +29,7 @@
                         <td>{{ $alat->nama_alat }}</td>
                         <td>{{ $alat->stok}}</td>
                         <td>{{ $alat->kondisi}}</td>
-                        <td>{{ $alat->foto_alat }}</td>
+                        <td><img src="/uploads/foto_alat/{{ $alat->foto_alat }}" alt="Foto Alat" width="100"></td>
                         <td>
                             <a href="{{ route('alat.edit', ['id' => $alat->id_alat]) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('alat.destroy', ['id' => $alat->id_alat]) }}"
@@ -42,9 +39,6 @@
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                             </form>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="7" class="text-center">Belum ada data alat.</td>
                     </tr>
                     @endforeach
                 </tbody>

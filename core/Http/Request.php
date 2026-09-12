@@ -205,6 +205,12 @@ class Request
         return $this->files[$key] ?? null;
     }
 
+    public function hasFile(string $key): bool
+{
+    return isset($this->files[$key])
+        && $this->files[$key]['error'] !== UPLOAD_ERR_NO_FILE
+        && $this->files[$key]['error'] === UPLOAD_ERR_OK;
+}
     public function cookie(string $key, mixed $default = null): mixed
     {
         return $this->cookies[$key] ?? $default;

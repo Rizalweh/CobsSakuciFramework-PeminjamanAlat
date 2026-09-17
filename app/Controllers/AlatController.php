@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Sakuci\Controller;
 use Sakuci\Http\Request;
 use App\Models\Alat;
+use App\Models\Kategori;
 
 class AlatController extends Controller
 {
@@ -16,6 +17,7 @@ class AlatController extends Controller
 
     public function create(Request $request)
     {
+        $kategori = Kategori::all();
         return view('alat.create');
     }
 
@@ -26,6 +28,7 @@ class AlatController extends Controller
             'nama_alat' => 'required|string|max:255',
             'stok' => 'required|numeric|min:0',
             'kondisi' => 'required|in:Baik,Rusak Ringan,Rusak Berat',
+            'id_kategori' => 'nullable|exists:kategori,id_kategori',
             'foto_alat' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -43,7 +46,8 @@ class AlatController extends Controller
     public function edit(Request $request, $id)
     {
         $data = Alat::FindOrFail($id);
-        return view('alat.edit', compact('data'));
+        $kategori = Kategori::all();
+        return view('alat.edit', compact('data', 'kategori'));
     }
 
     public function update(Request $request, $id)
@@ -56,6 +60,7 @@ class AlatController extends Controller
             'nama_alat' => 'required|string|max:255',
             'stok' => 'required|numeric|min:0',    
             'kondisi' => 'required|in:Baik,Rusak Ringan,Rusak Berat',
+            'id_kategori' => 'nullable|exists:kategori,id_kategori',
             'foto_alat' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

@@ -6,6 +6,15 @@
         <div class="card-body">
             <form action="{{ route('alat.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <label>Nama Kategori</label>
+                <select name="id_kategori" id="id_kategori" class="form-control" required>
+                    <option value="">Pilih kategori alat</option>
+                    @foreach ($kategori as $k)
+                        <option value="{{ $k->id_kategori }}" {{ old('id_kategori') == $k->id_kategori ? 'selected' : '' }}>
+                            {{ $k->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
                 <label>Nama Alat</label>
                 <input type="text" name="nama_alat" id="nama_alat" class="form-control" value="{{ old('nama_alat') }}" required>
                 <label>Kode Alat</label>

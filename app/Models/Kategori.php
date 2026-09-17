@@ -10,4 +10,9 @@ class Kategori extends Model
     protected string $primaryKey = 'id_kategori';
 
     protected array $fillable = ['nama_kategori','kode_kategori','keterangan'];
+
+    public function alat()
+    {
+        return $this->hasMany(Alat::class, 'id_kategori', 'id_kategori');
+    }
 }

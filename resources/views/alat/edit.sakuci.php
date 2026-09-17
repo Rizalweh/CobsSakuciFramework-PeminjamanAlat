@@ -7,6 +7,16 @@
             <form action="{{ route('alat.update', ['id' => $data->id_alat]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                <label>Nama Kategori</label>
+                <select name="id_kategori" id="id_kategori" class="form-control" required>
+                    <option value="">Pilih Kategori Alat</option>
+                    @foreach ($kategori as $k)
+                        <option value="{{ $k->id_kategori }}" {{ old('id_kategori', $data->id_kategori == $k->id_kategori ? 'selected' : '' )}}>
+                            {{ $k->nama_kategori }}
+                        </option>
+                    @endforeach
+                    
+                </select>
                 <label>Nama Alat</label>
                 <input type="text" name="nama_alat" id="nama_alat" class="form-control" value="{{ old('nama_alat', $data->nama_alat) }}" required>
                 <label>Kode Alat</label>

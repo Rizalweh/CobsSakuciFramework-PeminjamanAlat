@@ -11,7 +11,9 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        
                         <th>No</th>
+                        <th>Kategori</th>
                         <th>Kode</th>
                         <th>Nama Alat</th>
                         <th>Stok</th>
@@ -25,6 +27,7 @@
                     @foreach ($data as $alat)
                     <tr>
                         <td>{{ $no++ }}</td>
+                        <td>{{ $alat->kategori->nama_kategori ?? '-' }}</td>
                         <td>{{ $alat->kode_alat }}</td>
                         <td>{{ $alat->nama_alat }}</td>
                         <td>{{ $alat->stok}}</td>

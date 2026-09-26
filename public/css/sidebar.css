@@ -1,0 +1,155 @@
+/* Sidebar Sakuci — struktur + animasi */
+
+:root {
+    --sidebar-w: 260px;
+}
+html.sidebar-collapsed {
+    --sidebar-w: 72px;
+}
+
+/* Bar atas (layar kecil) */
+.app-topbar {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .75rem;
+    z-index: 1020;
+}
+
+/* Isi sidebar: kolom penuh, akun menempel di bawah */
+.sidebar .offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 1rem;
+    padding: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .25rem .25rem 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.sidebar-menu .nav-link,
+.sidebar-footer .btn {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    white-space: nowrap;
+}
+.sidebar-footer .btn {
+    justify-content: center;
+    gap: .5rem;
+}
+
+.sidebar-menu .nav-link {
+    color: var(--bs-body-color);
+    text-align: left;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+.sidebar-menu .nav-link:hover:not(.active) {
+    background-color: var(--bs-tertiary-bg);
+    transform: translateX(4px);
+}
+.sidebar-menu .nav-link.active {
+    color: #fff;
+}
+.sidebar-menu .nav-link i {
+    font-size: 1.1rem;
+    width: 1.25rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sidebar-toggle i {
+    transition: transform .25s ease;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bs-border-color);
+}
+
+/* Teks label: bisa menghilang halus saat sidebar diciutkan */
+.sidebar-text {
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity .2s ease, max-width .25s ease;
+}
+
+/* Layar kecil: laci geser (animasi geser dari Bootstrap) */
+@media (max-width: 991.98px) {
+    .sidebar {
+        background-color: var(--bs-body-bg);
+        width: min(var(--sidebar-w), 85vw);
+    }
+}
+
+/* Layar besar: menetap di kiri, konten bergeser */
+@media (min-width: 992px) {
+    .sidebar.offcanvas-lg {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        width: var(--sidebar-w) !important;
+        height: 100vh !important;
+        background-color: var(--bs-body-bg) !important;
+        border-right: 1px solid var(--bs-border-color) !important;
+        overflow-x: hidden;
+        z-index: 1030;
+        transition: width .25s ease;
+    }
+
+    .app-content {
+        margin-left: var(--sidebar-w);
+        transition: margin-left .25s ease;
+    }
+
+    /* Keadaan diciutkan: tinggal ikon */
+    html.sidebar-collapsed .sidebar-text {
+        opacity: 0;
+        max-width: 0;
+    }
+    html.sidebar-collapsed .sidebar-account {
+        display: none;
+    }
+    html.sidebar-collapsed .sidebar .offcanvas-body {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+    html.sidebar-collapsed .sidebar-brand,
+    html.sidebar-collapsed .sidebar-menu .nav-link,
+    html.sidebar-collapsed .sidebar-footer .btn {
+        justify-content: center;
+        gap: 0;
+    }
+    html.sidebar-collapsed .sidebar-menu .nav-link:hover:not(.active) {
+        transform: none;
+    }
+    html.sidebar-collapsed .sidebar-toggle i {
+        transform: rotate(180deg);
+    }
+}
+
+/* Hormati pengguna yang mematikan animasi */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .app-content,
+    .sidebar-text,
+    .sidebar-menu .nav-link,
+    .sidebar-toggle i {
+        transition: none !important;
+    }
+}

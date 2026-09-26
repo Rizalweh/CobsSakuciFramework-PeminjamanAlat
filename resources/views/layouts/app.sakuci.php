@@ -14,25 +14,44 @@
         })();
     </script>
 
-    {{-- Bootstrap 5.3.8 -- file lokal, tidak butuh internet --}}
+    {{-- Bootstrap 5.3.8 dan Bootstrap Icons -- file lokal, tidak butuh internet --}}
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bi/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    
 </head>
-<body class="d-flex flex-column min-vh-100 bg-body-tertiary">
+<body class="bg-body-tertiary">
 
 @include('partials.navbar')
 
-<main class="container flex-grow-1 py-4 py-lg-5">
-    @include('partials.flash')
+<div class="app-content d-flex flex-column min-vh-100">
+    <main class="container-fluid px-3 px-lg-4 flex-grow-1 py-4">
+        @include('partials.flash')
 
-    @yield('content')
-</main>
+        @yield('content')
+    </main>
 
-@include('partials.footer')
+    @include('partials.footer')
+</div>
 
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
 @yield('scripts')
 
+<script>
+    // Ciutkan / lebarkan sidebar (layar besar). Pilihan disimpan di localStorage.
+(function () {
+    var btn = document.getElementById('sidebarToggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+        var root = document.documentElement;
+        var collapsed = root.classList.toggle('sidebar-collapsed');
+        try {
+            localStorage.setItem('sakuci-sidebar', collapsed ? 'collapsed' : 'expanded');
+        } catch (e) {}
+    });
+})();
+</script>
 </body>
 </html>

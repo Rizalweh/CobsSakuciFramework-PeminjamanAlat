@@ -8,6 +8,7 @@ use App\Controllers\Core\RoleController;
 use App\Controllers\Core\UserController;
 use App\Controllers\KategoriController;
 use App\Controllers\AlatController;
+use App\Controllers\PeminjamanController;
 use Sakuci\Route;
 
 /*
@@ -70,6 +71,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/alat/{id}/edit', [AlatController::class, 'edit'])->name('alat.edit');
     Route::put('/alat/{id}', [AlatController::class, 'update'])->name('alat.update');
     Route::delete('/alat/{id}', [AlatController::class, 'destroy'])->name('alat.destroy');
+    
+    
+});
+
+Route::group(['prefix' => 'petugas', 'middleware' => 'petugas'], function () {
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('petugas.peminjaman.index');
+    Route::put('/peminjaman/{id}/setujui', [PeminjamanController::class, 'setujui'])->name('petugas.peminjaman.setujui');
+    Route::put('/peminjaman/{id}/tolak', [PeminjamanController::class, 'tolak'])->name('petugas.peminjaman.tolak');
+});
+
+Route::group(['prefix' => 'peminjam', 'middleware' => 'peminjam'], function () {
+    Route::get('/alat', [AlatController::class, 'daftarAlat'])->name('peminjam.alat.index');
+    Route::post('/peminjaman/ajukan', [PeminjamanController::class, 'ajukan'])->name('peminjam.peminjaman.ajukan');
 });
 
 /*
@@ -87,6 +101,16 @@ Route::group(['prefix' => 'siswa', 'middleware' => 'siswa'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('siswa.dashboard');
 });
 // @role:siswa:end
+// @role:peminjam:start
+Route::group(['prefix' => 'peminjam', 'middleware' => 'peminjam'], function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('peminjam.dashboard');
+});
+// @role:peminjam:end
+// @role:petugas:start
+Route::group(['prefix' => 'petugas', 'middleware' => 'petugas'], function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('petugas.dashboard');
+});
+// @role:petugas:end
 // @generated-roles:end
 
 /*

@@ -7,6 +7,8 @@ use App\Models\User;
 use Sakuci\Controller;
 use Sakuci\Http\Request;
 use Sakuci\Session;
+use App\Models\LogAktivitas;
+use App\Models\Profil;
 
 class AuthController extends Controller
 {
@@ -39,14 +41,31 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
             'role'     => 'required|in:' . implode(',', $allowed),
         ]);
-
+        
         $user = User::create([
-            'username' => $data['username'],
-            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-            'role'     => $data['role'],
-        ]);
+    'username' => $data['username'],
+    'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+    'role'     => $data['role'],
+]);
 
-        Session::put('user_id', $user->id);
+if ($data['role'] === 'peminjam') {
+    $profil = $request->validate([
+        'nama_lengkap' => 'required|min:3|max:100',
+        'no_hp'        => 'required|numeric',
+        'alamat'       => 'nullable|max:255',
+        'nis'          => 'required|numeric|unique:profil,nis',
+    ]);
+
+    Profil::create([
+        'id_user'      => $user->id,
+        'nama_lengkap' => $profil['nama_lengkap'],
+        'no_hp'        => $profil['no_hp'],
+        'alamat'       => $profil['alamat'],
+        'nis'          => $profil['nis']
+    ]);
+}
+
+Session::put('user_id', $user->id);
 
         return redirect('/dashboard')->with('success', 'Pendaftaran berhasil. Selamat datang, ' . $user->username . '.');
     }
@@ -68,15 +87,23 @@ class AuthController extends Controller
 
         Session::put('user_id', $user->id);
 
+        LogAktivitas::catat($user->id, 'Login');
+
         return redirect($user->role === 'admin' ? '/admin' : '/dashboard')
             ->with('success', 'Selamat datang, ' . $user->username . '.');
     }
 
     public function logout()
     {
+        $user = User::current();
+         if ($user) {
+            LogAktivitas::catat($user->id, "Logout ({$user->username})");
+        }
+
         Session::forget('user_id');
 
         return redirect('/login')->with('success', 'Berhasil logout.');
     }
+    
 }
 

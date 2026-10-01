@@ -45,6 +45,27 @@
                             <input type="hidden" name="role" value="{{ $roles[0]->name }}">
                         @endif
 
+                        <p class="text-secondary small">Data di bawah ini diisi jika mendaftar sebagai peminjam.</p>
+
+<div class="mb-3">
+    <label class="form-label" for="nama_lengkap">Nama Lengkap</label>
+    <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label class="form-label" for="nik">NIS</label>
+    <input type="text" id="nik" name="nik" value="{{ old('nis') }}" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label class="form-label" for="no_hp">No. HP</label>
+    <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label class="form-label" for="alamat">Alamat</label>
+    <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" class="form-control">
+</div>
                         <button class="btn btn-brand w-100" type="submit">Daftar</button>
                     </form>
                 </div>

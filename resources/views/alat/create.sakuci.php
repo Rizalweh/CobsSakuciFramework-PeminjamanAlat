@@ -17,6 +17,8 @@
                 </select>
                 <label>Nama Alat</label>
                 <input type="text" name="nama_alat" id="nama_alat" class="form-control" value="{{ old('nama_alat') }}" required>
+                <label>Harga Alat</label>
+                <input type="number" name="harga_alat" id="harga_alat" class="form-control" value="{{ old('harga_alat') }}" required>
                 <label>Kode Alat</label>
                 <input type="text" name="kode_alat" id="kode_alat" class="form-control" value="{{ old('kode_alat') }}" required>
                 <label>Stok</label>

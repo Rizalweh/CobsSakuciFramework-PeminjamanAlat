@@ -8,7 +8,12 @@ use App\Controllers\Core\RoleController;
 use App\Controllers\Core\UserController;
 use App\Controllers\KategoriController;
 use App\Controllers\AlatController;
+use App\Controllers\Core\LogAktivitasController as CoreLogAktivitasController;
 use App\Controllers\PeminjamanController;
+use App\Controllers\WelcomeController;
+use App\Controllers\PengembalianController;
+use App\Controllers\LogAktivitasController;
+use App\Controllers\Core\PeminjamController as AdminPeminjamController;
 use Sakuci\Route;
 
 /*
@@ -23,9 +28,7 @@ use Sakuci\Route;
 |   function () { ... }                -> closure
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 Route::get('/docs', [DocsController::class, 'index'])->name('docs');
 
@@ -47,6 +50,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', [DashboardController::class, 'admin'])->name('admin.dashboard');
+    
 
     Route::get('/roles', [RoleController::class, 'index'])->name('admin.roles.index');
     Route::post('/roles', [RoleController::class, 'store'])->name('admin.roles.store');
@@ -55,6 +59,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+    Route::get('/log', [LogAktivitasController::class, 'index'])->name('admin.log.index');
+    Route::delete('/log/{id}', [LogAktivitasController::class, 'destroy'])->name('admin.log.destroy');
+    Route::delete('/log', [LogAktivitasController::class, 'hapusLama'])->name('admin.log.hapusLama');
 
     Route::get('/database/export', [DatabaseController::class, 'export'])->name('admin.database.export');
 
@@ -72,19 +83,42 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::put('/alat/{id}', [AlatController::class, 'update'])->name('alat.update');
     Route::delete('/alat/{id}', [AlatController::class, 'destroy'])->name('alat.destroy');
     
-    
+    Route::get('/peminjam', [AdminPeminjamController::class, 'index'])->name('admin.peminjam.index');
+Route::get('/peminjam/create', [AdminPeminjamController::class, 'create'])->name('admin.peminjam.create');
+Route::post('/peminjam', [AdminPeminjamController::class, 'store'])->name('admin.peminjam.store');
+Route::get('/peminjam/{user}/edit', [AdminPeminjamController::class, 'edit'])->name('admin.peminjam.edit');
+Route::put('/peminjam/{user}', [AdminPeminjamController::class, 'update'])->name('admin.peminjam.update');
+Route::delete('/peminjam/{user}', [AdminPeminjamController::class, 'destroy'])->name('admin.peminjam.destroy');
 });
 
 Route::group(['prefix' => 'petugas', 'middleware' => 'petugas'], function () {
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('petugas.peminjaman.index');
     Route::put('/peminjaman/{id}/setujui', [PeminjamanController::class, 'setujui'])->name('petugas.peminjaman.setujui');
     Route::put('/peminjaman/{id}/tolak', [PeminjamanController::class, 'tolak'])->name('petugas.peminjaman.tolak');
+
+    Route::get('/peminjaman/riwayat', [PeminjamanController::class, 'riwayatSemua'])->name('petugas.peminjaman.riwayat.index');
+    Route::delete('/peminjaman/riwayat', [PeminjamanController::class, 'hapusRiwayatLama'])->name('petugas.peminjaman.riwayat.hapusRiwayatLama');
+
+    Route::get('/pengembalian', [PengembalianController::class, 'index'])->name('petugas.pengembalian.index');
+    Route::get('/pengembalian/{id}/proses', [PengembalianController::class, 'create'])->name('petugas.pengembalian.create');
+    Route::post('/pengembalian/{id}/proses', [PengembalianController::class, 'store'])->name('petugas.pengembalian.store');
+    Route::get('/peminjaman/riwayat', [PeminjamanController::class, 'riwayatSemua'])->name('petugas.peminjaman.riwayat');
+
+    Route::get('/denda', [PengembalianController::class, 'denda'])->name('petugas.denda.index');
+Route::put('/denda/{id}/bayar', [PengembalianController::class, 'bayar'])->name('petugas.denda.bayar');
+
 });
 
 Route::group(['prefix' => 'peminjam', 'middleware' => 'peminjam'], function () {
     Route::get('/alat', [AlatController::class, 'daftarAlat'])->name('peminjam.alat.index');
     Route::post('/peminjaman/ajukan', [PeminjamanController::class, 'ajukan'])->name('peminjam.peminjaman.ajukan');
+
+    Route::get('/peminjaman', [PeminjamanController::class, 'daftarPeminjaman'])->name('peminjam.peminjaman.index');
+    Route::put('/peminjaman/{id}/kembali', [PeminjamanController::class, 'ajukanPengembalian'])->name('peminjam.kembali');
+    Route::get('/peminjaman/riwayat', [PeminjamanController::class, 'riwayat'])->name('peminjam.riwayat');
+    Route::get('/peminjaman/dipinjam', [PeminjamanController::class, 'sedangDipinjam'])->name('peminjam.dipinjam');
 });
+    
 
 /*
 |--------------------------------------------------------------------------

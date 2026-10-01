@@ -61,6 +61,7 @@
                                 <th>#</th>
                                 <th>Username</th>
                                 <th>Role</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,10 +70,24 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->username }}</td>
                                     <td><code class="inline">{{ $item->role }}</code></td>
+                                    <td>
+                                        @if ($item->id === $currentUser)
+                                            <span class="text-secondary small">Akun ini (kamu)</span>
+                                        @else
+                                            <div class="d-flex align-items-center gap-2">
+                                                <a href="{{ route('admin.users.edit', ['user' => $item->id]) }}" class="btn btn-sm btn-outline-brand">Edit</a>
+                                                <form method="POST" action="{{ route('admin.users.destroy', ['user' => $item->id]) }}" onsubmit="return confirm('Hapus user &quot;{{ $item->username }}&quot;?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-secondary">Belum ada user.</td>
+                                    <td colspan="4" class="text-secondary">Belum ada user.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -83,4 +98,3 @@
     </div>
 
 @endsection
-

@@ -40,5 +40,9 @@ class User extends Model
 
         return $user;
     }
+    public function profil()
+{
+    return $this->hasOne(Profil::class, 'id_user', 'id');
+}
 }
 

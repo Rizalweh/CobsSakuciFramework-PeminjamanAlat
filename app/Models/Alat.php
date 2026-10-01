@@ -8,7 +8,7 @@ class Alat extends Model
 {
     protected static ?string $table = 'alat';
     protected string $primaryKey = 'id_alat';
-    protected array $fillable = ['id_alat', 'kode_alat', 'nama_alat', 'stok','kondisi', 'foto_alat', 'id_kategori'];
+    protected array $fillable = ['id_alat', 'kode_alat', 'nama_alat', 'harga_alat', 'stok','kondisi', 'foto_alat', 'id_kategori'];
 
     public function kategori()
     {

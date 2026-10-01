@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'name'     => env('APP_NAME', 'Coba Latihan'),
+    'name'     => env('APP_NAME', 'Sarpras Tech'),
 
     // Saat true, halaman error menampilkan detail lengkap. Matikan di produksi.
     'debug'    => env('APP_DEBUG', true),

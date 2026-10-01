@@ -32,6 +32,7 @@ class AlatController extends Controller
         $data = $request->validate([
             'kode_alat' => 'required|string|max:255|unique:alat,kode_alat',
             'nama_alat' => 'required|string|max:255',
+            'harga_alat' => 'required|numeric|min:0',
             'stok' => 'required|numeric|min:0',
             'kondisi' => 'required|in:Baik,Rusak Ringan,Rusak Berat',
             'id_kategori' => 'nullable|exists:kategori,id_kategori',

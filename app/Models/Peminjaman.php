@@ -37,4 +37,9 @@ class Peminjaman extends Model
     {
         return static::where('status_peminjaman', 'pending');
     }
+
+    public function pengembalian()
+{
+    return $this->hasOne(Pengembalian::class, 'id_peminjaman', 'id_peminjaman');
+}
 }

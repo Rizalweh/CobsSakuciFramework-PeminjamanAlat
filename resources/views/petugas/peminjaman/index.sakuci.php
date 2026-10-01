@@ -5,13 +5,6 @@
 @section('content')
 <h1>Pengajuan Peminjaman (Pending)</h1>
 
-@if (session('success'))
-<div class="alert alert-success">{{ session('success') }}</div>
-@endif
-@if (session('error'))
-<div class="alert alert-danger">{{ session('error') }}</div>
-@endif
-
 <table class="table table-sm align-middle table-hover table-bordered table-striped">
 <tr>
     <th>No</th>
@@ -51,6 +44,8 @@
             @method('put')
             <button type="submit" class="btn btn-success btn-sm">Setujui</button>
         </form>
+    </td>
+    <td>
         <form action="{{ route('petugas.peminjaman.tolak', ['id' => $p->id_peminjaman]) }}" method="post" class="d-inline" onsubmit="return confirm('Tolak pengajuan ini?')">
             @csrf
             @method('put')

@@ -36,6 +36,57 @@ html.sidebar-collapsed {
     border-bottom: 1px solid var(--bs-border-color);
 }
 
+/* Tombol tema: ikon matahari & bulan ditumpuk, tampil bergantian sesuai tema */
+.logo-toggle {
+    position: relative;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+.theme-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: opacity .25s ease, transform .35s ease;
+}
+.theme-icon-light {
+    color: #f5a623;
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+.theme-icon-dark {
+    color: #c9d1ff;
+    opacity: 0;
+    transform: scale(.5) rotate(-90deg);
+}
+[data-bs-theme="dark"] .theme-icon-light {
+    opacity: 0;
+    transform: scale(.5) rotate(90deg);
+}
+[data-bs-theme="dark"] .theme-icon-dark {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+.db-status-dot {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--bs-body-bg);
+}
+
 .sidebar-menu .nav-link,
 .sidebar-footer .btn {
     display: flex;
@@ -58,7 +109,19 @@ html.sidebar-collapsed {
     transform: translateX(4px);
 }
 .sidebar-menu .nav-link.active {
-    color: #fff;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+}
+
+/* Mode gelap: balik jadi terang, supaya tetap kontras (bukan hitam di atas hitam) */
+[data-bs-theme="dark"] .sidebar-menu .nav-link.active {
+    background-color: #f2f2f2 !important;
+    color: #1a1a1a !important;
+    border: 1px solid #f2f2f2 !important;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, .1);
 }
 .sidebar-menu .nav-link i {
     font-size: 1.1rem;
@@ -115,6 +178,20 @@ html.sidebar-collapsed {
     .app-content {
         margin-left: var(--sidebar-w);
         transition: margin-left .25s ease;
+    }
+
+    /* Bootstrap mereset .offcanvas-body jadi flex-grow:0 dan tinggi
+       mengikuti konten begitu masuk breakpoint lg (dibuat untuk mode
+       "menyatu di navbar", bukan sidebar). Paksa kembali jadi kolom
+       penuh setinggi sidebar, supaya .sidebar-footer (margin-top:auto)
+       benar-benar menempel di bawah, bukan naik mengikuti tinggi konten. */
+    .sidebar.offcanvas-lg .offcanvas-body {
+        display: flex !important;
+        flex-direction: column !important;
+        flex-grow: 1 !important;
+        height: 100% !important;
+        padding: 1rem !important;
+        overflow-y: auto !important;
     }
 
     /* Keadaan diciutkan: tinggal ikon */
